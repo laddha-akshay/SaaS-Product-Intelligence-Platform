@@ -1,6 +1,6 @@
 """Feature engineering for ranking model."""
 import numpy as np
-from typing import List, Dict, Any
+from typing import List
 
 
 class FeatureExtractor:
@@ -19,22 +19,24 @@ class FeatureExtractor:
         Extract ranking features.
 
         Features:
-        0. Dense similarity score (semantic)
-        1. Sparse similarity score (keyword)
-        2. Document length (longer docs may be more informative)
-        3. Query-doc term overlap (keyword density)
-        4. Recency decay (fresher docs are better)
-        5. Feedback signal (historical usefulness)
+        0. Dense similarity score
+        1. Sparse similarity score
+        2. Document length
+        3. Query-doc term overlap
+        4. Recency decay
+        5. Feedback signal
         """
+
         features = [
             dense_score,
             sparse_score,
-            min(1.0, len(document.split()) / 500.0),  # normalized doc length
+            min(1.0, len(document.split()) / 500.0),
             len(set(query.lower().split()) & set(document.lower().split()))
             / max(len(query.split()), 1),
             recency_decay,
             feedback_signal,
         ]
+
         return np.array(features, dtype=np.float32)
 
     @staticmethod
@@ -47,6 +49,8 @@ class FeatureExtractor:
         """Extract features for a batch of documents."""
         features_list = []
         for doc, ds, ss in zip(documents, dense_scores, sparse_scores):
-            feat = FeatureExtractor.extract_features(query, doc, ds, ss)
+            feat = FeatureExtractor.extract_features(
+                query=query, document=doc, dense_score=ds, sparse_score=ss
+            )
             features_list.append(feat)
         return np.array(features_list, dtype=np.float32)
