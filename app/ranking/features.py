@@ -9,7 +9,7 @@ class FeatureExtractor:
     @staticmethod
     def extract_features(
         query: str,
-        document: str,
+        doc: str,
         dense_score: float,
         sparse_score: float,
         recency_decay: float = 1.0,
@@ -30,8 +30,8 @@ class FeatureExtractor:
         features = [
             dense_score,
             sparse_score,
-            min(1.0, len(document.split()) / 500.0),
-            len(set(query.lower().split()) & set(document.lower().split()))
+            min(1.0, len(doc.split()) / 500.0),
+            len(set(query.lower().split()) & set(doc.lower().split()))
             / max(len(query.split()), 1),
             recency_decay,
             feedback_signal,
@@ -49,8 +49,6 @@ class FeatureExtractor:
         """Extract features for a batch of documents."""
         features_list = []
         for doc, ds, ss in zip(documents, dense_scores, sparse_scores):
-            feat = FeatureExtractor.extract_features(
-                query=query, document=doc, dense_score=ds, sparse_score=ss
-            )
+            feat = FeatureExtractor.extract_features(query, doc, ds, ss)
             features_list.append(feat)
         return np.array(features_list, dtype=np.float32)
