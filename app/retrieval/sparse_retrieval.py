@@ -1,8 +1,9 @@
+from typing import List
 from rank_bm25 import BM25Okapi
 
 
 class SparseRetriever:
-    def __init__(self, documents: list[str]):
+    def __init__(self, documents: List[str]):
         tokenized = [doc.split() for doc in documents]
         self.bm25 = BM25Okapi(tokenized)
         self.documents = documents
