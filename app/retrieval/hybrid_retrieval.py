@@ -9,4 +9,7 @@ class HybridRetriever:
         merged = {}
         for r in d + s:
             merged[r["text"]] = merged.get(r["text"], 0) + r["score"]
-        return [{"text": t, "score": s} for t, s in sorted(merged.items(), key=lambda x: x[1], reverse=True)]
+        return [
+            {"text": t, "score": s}
+            for t, s in sorted(merged.items(), key=lambda x: x[1], reverse=True)
+        ]

@@ -22,13 +22,14 @@ reasoning = ConstrainedReasoning(confidence_threshold=0.5)
 feedback_collector = FeedbackCollector()
 metrics = MetricsCollector()
 
+
 def run_pipeline(query: str) -> Dict[str, Any]:
     """
     Full pipeline: retrieve → rank → reason → collect feedback.
-    
+
     Args:
         query: user query
-    
+
     Returns:
         {
             "answer": str or None,
@@ -41,40 +42,41 @@ def run_pipeline(query: str) -> Dict[str, Any]:
     """
     query_id = str(uuid.uuid4())
     start_time = time.time()
-    
+
     try:
         # Step 1: Retrieve candidates (maximize recall)
         candidates = hybrid.search(query)
-        
+
         # Step 2: Rank by usefulness (LambdaRank)
         ranked = ranker.rank_candidates(query, candidates, top_k=TOP_K)
-        
+
         # Step 3: Synthesize answer with constraints
         answer = reasoning.synthesize_answer(query, ranked)
-        
+
         # Step 4: Log metrics
         latency_ms = (time.time() - start_time) * 1000
         metrics.record_query(
             query_id=query_id,
             latency_ms=latency_ms,
             retrieval_recall=min(1.0, len(candidates) / max(len(docs), 1)),
-            ranker_ndcg=sum(r.get("rank_score", 0) for r in ranked) / max(len(ranked), 1),
+            ranker_ndcg=sum(r.get("rank_score", 0) for r in ranked)
+            / max(len(ranked), 1),
             llm_refused=answer.get("refused", False),
-            confidence=answer.get("confidence", 0.0)
+            confidence=answer.get("confidence", 0.0),
         )
-        
+
         # Log interaction
         feedback_collector.log_interaction(query, answer)
-        
+
         return {
             "query_id": query_id,
             "answer": answer.get("answer"),
             "citations": answer.get("citations", []),
             "confidence": answer.get("confidence", 0.0),
             "refused": answer.get("refused", False),
-            "latency_ms": latency_ms
+            "latency_ms": latency_ms,
         }
-    
+
     except Exception as e:
         print(f"Pipeline error: {e}")
         return {
@@ -84,6 +86,5 @@ def run_pipeline(query: str) -> Dict[str, Any]:
             "confidence": 0.0,
             "refused": True,
             "error": str(e),
-            "latency_ms": (time.time() - start_time) * 1000
+            "latency_ms": (time.time() - start_time) * 1000,
         }
-

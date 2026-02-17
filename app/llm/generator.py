@@ -1,4 +1,6 @@
 """LLM generator placeholder."""
+
+
 def generate_answer(query, contexts):
     txt = " ".join([c["text"] for c in contexts])
     return {

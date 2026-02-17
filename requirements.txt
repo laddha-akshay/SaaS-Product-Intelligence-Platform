@@ -3,9 +3,15 @@ uvicorn
 pandas
 numpy
 sentence-transformers
+transformers
+torch
 rank-bm25
 faiss-cpu
 lightgbm
 mlflow
 scikit-learn
 pydantic
+pytest
+pytest-cov
+flake8
+black
