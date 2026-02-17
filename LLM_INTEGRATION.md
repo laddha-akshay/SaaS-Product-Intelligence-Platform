@@ -19,6 +19,7 @@ This guide walks you through integrating a real LLM API (OpenAI, Anthropic, etc.
 ## Current State
 
 The system currently uses a **deterministic, rule-based answer generator** that:
+
 - ✅ Works without any API key
 - ✅ Extracts answers from retrieved documents
 - ✅ Computes confidence from retrieval quality
@@ -30,13 +31,13 @@ This is intentional for safety, but you can enhance it with a real LLM that gene
 
 ## Why Integration?
 
-| Aspect | Without LLM | With LLM |
-|--------|------------|----------|
-| Answer Generation | Extract from docs | Synthesize & rephrase |
-| Fluency | Good | Excellent |
-| Contextual Understanding | Basic | Advanced |
-| Response Variety | Limited | Rich |
-| Hallucination Risk | None | Low (with constraints) |
+| Aspect                   | Without LLM       | With LLM               |
+| ------------------------ | ----------------- | ---------------------- |
+| Answer Generation        | Extract from docs | Synthesize & rephrase  |
+| Fluency                  | Good              | Excellent              |
+| Contextual Understanding | Basic             | Advanced               |
+| Response Variety         | Limited           | Rich                   |
+| Hallucination Risk       | None              | Low (with constraints) |
 
 ---
 
@@ -135,11 +136,11 @@ openai.api_key = OPENAI_API_KEY
 def generate_answer(query: str, contexts: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Generate answer using OpenAI API with context constraints.
-    
+
     Args:
         query: User question
         contexts: List of retrieved documents
-    
+
     Returns:
         {
             "answer": str,
@@ -153,15 +154,15 @@ def generate_answer(query: str, contexts: List[Dict[str, Any]]) -> Dict[str, Any
             "citations": [],
             "confidence": 0.0,
         }
-    
+
     # Prepare context string
     context_text = "\n\n".join([
-        f"Source {i+1}: {c['text'][:200]}" 
+        f"Source {i+1}: {c['text'][:200]}"
         for i, c in enumerate(contexts[:5])
     ])
-    
+
     # System prompt enforces constraints
-    system_prompt = """You are a product intelligence assistant. 
+    system_prompt = """You are a product intelligence assistant.
 Your job is to answer questions about why metrics changed using ONLY the provided internal documentation.
 
 CRITICAL RULES:
@@ -171,14 +172,14 @@ CRITICAL RULES:
 4. If you're not sure, say so
 5. Be concise (max 150 words)
 6. Format citations as [Source N] at the end"""
-    
+
     user_message = f"""Context from internal documentation:
 {context_text}
 
 Question: {query}
 
 Answer using ONLY the provided context above. Include citations."""
-    
+
     try:
         response = openai.ChatCompletion.create(
             model=OPENAI_MODEL,
@@ -190,21 +191,21 @@ Answer using ONLY the provided context above. Include citations."""
             max_tokens=256,
             timeout=10
         )
-        
+
         answer_text = response.choices[0].message.content
-        
+
         # Extract citations from answer
         citations = extract_citations(answer_text, contexts)
-        
+
         # Compute confidence based on model response + context quality
         confidence = compute_confidence(contexts, answer_text)
-        
+
         return {
             "answer": answer_text,
             "citations": citations,
             "confidence": confidence,
         }
-    
+
     except openai.error.RateLimitError:
         return {
             "answer": "Rate limited. Please try again in a moment.",
@@ -238,7 +239,7 @@ def extract_citations(answer: str, contexts: List[Dict[str, Any]]) -> List[str]:
 def compute_confidence(contexts: List[Dict[str, Any]], answer: str) -> float:
     """
     Compute confidence score.
-    
+
     Factors:
     - Number of supporting documents
     - Document rank scores
@@ -246,11 +247,11 @@ def compute_confidence(contexts: List[Dict[str, Any]], answer: str) -> float:
     """
     n_docs = min(len(contexts), 3)
     doc_score = (n_docs / 3.0) * 0.4
-    
+
     rank_score = (contexts[0].get("rank_score", 0.5) / 1.0) * 0.4
-    
+
     answer_length_score = min(1.0, len(answer.split()) / 50.0) * 0.2
-    
+
     return min(1.0, doc_score + rank_score + answer_length_score)
 ```
 
@@ -312,7 +313,7 @@ client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 def generate_answer(query: str, contexts: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Generate answer using Anthropic Claude API.
-    
+
     Claude excels at following instructions and avoiding hallucination.
     """
     if not contexts:
@@ -321,25 +322,25 @@ def generate_answer(query: str, contexts: List[Dict[str, Any]]) -> Dict[str, Any
             "citations": [],
             "confidence": 0.0,
         }
-    
+
     # Prepare context string
     context_text = "\n\n".join([
-        f"Source {i+1}: {c['text'][:200]}" 
+        f"Source {i+1}: {c['text'][:200]}"
         for i, c in enumerate(contexts[:5])
     ])
-    
+
     system_prompt = """You are a product intelligence assistant for a SaaS company.
 Answer ONLY using the provided context. Do not use external knowledge.
 Every answer must include [Source N] citations.
 Be concise and specific."""
-    
+
     user_message = f"""Context:
 {context_text}
 
 Question: {query}
 
 Answer using the context above. Include citations."""
-    
+
     try:
         message = client.messages.create(
             model=ANTHROPIC_MODEL,
@@ -350,17 +351,17 @@ Answer using the context above. Include citations."""
                 {"role": "user", "content": user_message}
             ]
         )
-        
+
         answer_text = message.content[0].text
         citations = extract_citations(answer_text, contexts)
         confidence = compute_confidence(contexts, answer_text)
-        
+
         return {
             "answer": answer_text,
             "citations": citations,
             "confidence": confidence,
         }
-    
+
     except anthropic.APIConnectionError as e:
         return {
             "answer": "Connection error. Check API key and internet.",
@@ -389,11 +390,11 @@ def compute_confidence(contexts: List[Dict[str, Any]], answer: str) -> float:
     """Compute confidence score from context quality and answer specificity."""
     n_docs = min(len(contexts), 3)
     doc_score = (n_docs / 3.0) * 0.4
-    
+
     rank_score = (contexts[0].get("rank_score", 0.5) / 1.0) * 0.4
-    
+
     answer_length_score = min(1.0, len(answer.split()) / 50.0) * 0.2
-    
+
     return min(1.0, doc_score + rank_score + answer_length_score)
 ```
 
@@ -451,10 +452,10 @@ def test_generate_answer_with_context():
             "rank_score": 0.85
         }
     ]
-    
+
     query = "Why did activation drop?"
     result = generate_answer(query, contexts)
-    
+
     assert result["answer"] is not None
     assert len(result["answer"]) > 0
     assert result["confidence"] > 0.5
@@ -464,7 +465,7 @@ def test_generate_answer_with_context():
 def test_generate_answer_empty_context():
     """Test graceful handling of empty context."""
     result = generate_answer("test query", [])
-    
+
     assert result["answer"] is not None
     assert result["confidence"] == 0.0
     assert len(result["citations"]) == 0
@@ -497,10 +498,12 @@ curl -X POST http://localhost:8000/query \
 ### Cost Estimation
 
 **OpenAI:**
+
 - gpt-3.5-turbo: ~$0.0005 per query
 - gpt-4: ~$0.003 per query
 
 **Anthropic:**
+
 - Claude 3 Sonnet: ~$0.003 per query
 - Claude 3 Opus: ~$0.015 per query
 
