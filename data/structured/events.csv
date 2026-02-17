@@ -1,1 +1,11 @@
-timestamp,event_type,user_id
+event_id,user_id,event_name,event_timestamp
+e001,u001,signup_completed,2025-01-10T10:15:00
+e002,u001,onboarding_started,2025-01-10T10:20:00
+e003,u001,onboarding_failed,2025-01-10T10:40:00
+e004,u002,signup_completed,2025-01-11T09:00:00
+e005,u002,onboarding_started,2025-01-11T09:10:00
+e006,u003,feature_used_dashboard,2025-01-15T14:30:00
+e007,u003,subscription_cancelled,2025-02-01T08:00:00
+e008,u004,feature_used_reports,2025-01-25T12:00:00
+e009,u005,onboarding_started,2025-01-18T13:20:00
+e010,u005,onboarding_failed,2025-01-18T13:40:00

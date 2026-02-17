@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "incident_id": "i001",
+    "date": "2025-01-22",
+    "severity": "medium",
+    "description": "Temporary latency spike in onboarding service due to database migration."
+  }
+]

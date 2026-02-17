@@ -1,3 +1,6 @@
 {
-  "sources": []
+  "metric": { "weight": 1.0 },
+  "event": { "weight": 0.8 },
+  "ticket": { "weight": 0.6 },
+  "doc": { "weight": 0.5 }
 }

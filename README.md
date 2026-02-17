@@ -16,7 +16,7 @@ Modern SaaS companies generate large volumes of structured and unstructured data
 - Release notes
 - Internal documentation
 
-Dashboards explain *what happened* but rarely explain *why*.  
+Dashboards explain _what happened_ but rarely explain _why_.  
 Traditional LLM systems can generate explanations but often hallucinate or rely on incomplete context.
 
 This platform addresses that gap by producing **grounded, explainable insights** backed by evidence.
@@ -39,12 +39,12 @@ This platform addresses that gap by producing **grounded, explainable insights**
 
 End-to-end pipeline:
 
-1. Data ingestion and validation  
-2. Hybrid retrieval to maximize recall  
-3. Learning-to-Rank model to reorder by usefulness  
-4. Constrained reasoning layer operating only on ranked evidence  
-5. Feedback collection and retraining  
-6. Monitoring and rollback support  
+1. Data ingestion and validation
+2. Hybrid retrieval to maximize recall
+3. Learning-to-Rank model to reorder by usefulness
+4. Constrained reasoning layer operating only on ranked evidence
+5. Feedback collection and retraining
+6. Monitoring and rollback support
 
 The reasoning layer is treated as a **reasoning component**, not a source of truth.
 
@@ -53,7 +53,7 @@ The reasoning layer is treated as a **reasoning component**, not a source of tru
 ## Repository Structure
 
 ```
-enterprise-intelligence/
+saas_product_intelligence_platform/
 │
 ├── app/
 │   ├── api.py
@@ -88,8 +88,8 @@ enterprise-intelligence/
 ### Local setup
 
 ```bash
-git clone https://github.com/yourname/enterprise-intelligence.git
-cd enterprise-intelligence
+git clone https://github.com/yourname/saas_product_intelligence_platform.git
+cd saas_product_intelligence_platform
 pip install -r requirements.txt
 ```
 

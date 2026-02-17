@@ -1,1 +1,6 @@
-id,name,email
+user_id,account_id,plan,signup_date
+u001,a001,free,2025-01-10
+u002,a001,free,2025-01-11
+u003,a002,pro,2024-11-15
+u004,a003,enterprise,2024-09-20
+u005,a002,pro,2024-12-02
