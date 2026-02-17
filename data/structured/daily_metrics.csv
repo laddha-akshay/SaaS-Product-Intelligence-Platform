@@ -1,11 +1,62 @@
-date,metric_name,value
-2025-01-15,activation_rate,0.42
-2025-01-16,activation_rate,0.41
-2025-01-17,activation_rate,0.39
-2025-01-18,activation_rate,0.36
-2025-01-19,activation_rate,0.35
-2025-01-20,activation_rate,0.34
-2025-01-21,activation_rate,0.33
-2025-01-22,activation_rate,0.32
-2025-01-15,churn_rate,0.020
-2025-01-22,churn_rate,0.028
+date,metric_name,value,segment,notes
+2025-01-15,activation_rate,0.42,all,Baseline before Release 2.3
+2025-01-16,activation_rate,0.41,all,Friday - end of week
+2025-01-17,activation_rate,0.40,all,Weekend
+2025-01-18,activation_rate,0.36,all,Release 2.3 shipped - mandatory compliance checklist caused drop
+2025-01-19,activation_rate,0.35,all,Saturday after bad release
+2025-01-20,activation_rate,0.34,all,Support surge - 47 tickets. Data warehouse failing 92%
+2025-01-21,activation_rate,0.33,all,Continued degradation. Teams on incident response
+2025-01-22,activation_rate,0.32,all,Worst day. Product meeting to discuss rollback
+2025-01-23,activation_rate,0.35,all,Started recovery - made compliance optional. Fixed data warehouse timeout
+2025-01-24,activation_rate,0.37,all,Users responding to in-app notification about changes
+2025-01-25,activation_rate,0.39,all,Nearly back to baseline. Support tickets normalized to 18/day
+2025-01-26,activation_rate,0.39,all,Stabilized
+2025-01-27,activation_rate,0.40,all,Sunday
+2025-01-28,activation_rate,0.41,all,Continuing recovery momentum
+2025-01-29,activation_rate,0.40,all,Still 2% below baseline but trending positively
+2025-01-30,activation_rate,0.40,all,Stable. Teams confident in recovery
+2025-01-31,activation_rate,0.41,all,Month end. Planning next steps
+2025-02-01,activation_rate,0.42,all,Back to baseline! Release 2.4 in progress
+2025-02-02,activation_rate,0.42,all,Holding steady
+2025-02-03,activation_rate,0.43,all,Slight improvement
+2025-02-04,activation_rate,0.43,all,
+2025-02-05,activation_rate,0.44,all,Redis latency fix deployed - dashboard performance improved
+2025-02-06,activation_rate,0.44,all,
+2025-02-07,activation_rate,0.45,all,Release 2.4 shipped - API v2 GA
+2025-02-08,activation_rate,0.45,all,First full week of 2.4 stability
+2025-02-09,activation_rate,0.46,all,Growth trend continuing
+2025-02-10,activation_rate,0.46,all,
+2025-01-15,retention_rate_d7,0.68,all,Q4 feature flags helping prevent bad deployments
+2025-01-22,retention_rate_d7,0.64,all,Release 2.3 bad launch - affected retention
+2025-01-29,retention_rate_d7,0.67,all,Recovery from 2.3 issues
+2025-02-05,retention_rate_d7,0.70,all,Win-back campaigns starting to show impact
+2025-01-15,churn_rate,0.020,all,Monthly churn baseline
+2025-01-22,churn_rate,0.028,all,Release 2.3 caused spike - users leaving due to confusing UX
+2025-01-29,churn_rate,0.025,all,Slight improvement after fixes
+2025-02-05,churn_rate,0.022,all,Win-back campaigns and improved UX reducing churn
+2025-01-15,api_latency_p95_ms,245,all,Baseline performance
+2025-01-18,api_latency_p95_ms,280,all,Minor spike from Release 2.3 increased payload sizes
+2025-01-22,api_latency_p95_ms,450,all,Redis LRU policy causing 4x latency increase during peak
+2025-01-29,api_latency_p95_ms,380,all,Still elevated - diagnosing Redis issue
+2025-02-05,api_latency_p95_ms,165,all,LRU -> LFU switch fixed it. Now better than baseline!
+2025-02-10,api_latency_p95_ms,168,all,Sustained improvement
+2025-01-15,support_tickets_daily,12,all,Baseline ticket volume
+2025-01-18,support_tickets_daily,47,all,Release 2.3 bug spike. 4x normal volume
+2025-01-19,support_tickets_daily,51,all,Peak support volume
+2025-01-22,support_tickets_daily,49,all,Still dealing with release fallout
+2025-01-23,support_tickets_daily,38,all,Fixes deployed - starting to decline
+2025-01-24,support_tickets_daily,28,all,Rapid decline as fix deploys
+2025-01-25,support_tickets_daily,18,all,Back to normal
+2025-01-28,support_tickets_daily,15,all,Better than baseline - users trusting us more
+2025-02-05,support_tickets_daily,14,all,
+2025-02-10,support_tickets_daily,13,all,
+2025-01-15,onboarding_step2_success_rate,0.85,all,Step 2 is data warehouse integration
+2025-01-20,onboarding_step2_success_rate,0.08,all,Release 2.3 connector timeout issue - 92% failure!
+2025-01-23,onboarding_step2_success_rate,0.78,all,Fixed timeout + connection pooling
+2025-01-29,onboarding_step2_success_rate,0.84,all,Nearly recovered
+2025-02-05,onboarding_step2_success_rate,0.87,all,Exceeded baseline
+2025-01-15,new_signups_daily,245,all,Baseline daily signups
+2025-01-22,new_signups_daily,198,all,30% drop from word-of-mouth effect of bad release
+2025-01-29,new_signups_daily,232,all,Recovery as we fix issues
+2025-02-05,new_signups_daily,268,all,Growth from Release 2.4 improvements
+2025-02-10,new_signups_daily,271,all,Continuing growth trajectory

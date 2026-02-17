@@ -1,1 +1,11 @@
-id,account_name,created_at
+account_id,company_name,company_size,industry,created_at,status,monthly_arr,churn_risk
+a001,TechFlow Inc,small,fintech,2025-01-01,active,2500,low
+a002,DataSync Systems,medium,saas,2024-10-12,active,8500,medium
+a003,HealthTech Solutions,large,healthcare,2024-08-05,active,15000,low
+a004,Fintern Analytics,small,fintech,2024-12-20,active,1800,high
+a005,Enterprise Data Platform,large,enterprise,2024-06-15,active,22000,low
+a006,SaaS Metrics Co,medium,analytics,2024-09-30,active,5200,low
+a007,Retail Intelligence,large,retail,2024-07-22,active,18500,medium
+a008,CloudOps Integrations,medium,infrastructure,2024-11-08,active,6800,low
+a009,MarketingAI,small,marketing-tech,2025-01-15,active,3200,medium
+a010,Global Finance Services,large,finance,2024-05-10,active,25000,low

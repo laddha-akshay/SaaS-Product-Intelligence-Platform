@@ -1,1 +1,125 @@
-[]
+[
+  {
+    "ticket_id": "t001",
+    "account_id": "a001",
+    "created_at": "2025-01-20T14:32:00Z",
+    "priority": "high",
+    "subject": "New onboarding is confusing - users stuck after step 2",
+    "body": "After Release 2.3 shipped, we're seeing users confused during the new mandatory integration wizard. Specifically, they don't understand why they need to complete the compliance checklist right away. Recommendations section is unclear. We have 12 users from this account alone stuck in the funnel. This is blocking our deal closure.",
+    "resolved": true,
+    "resolution": "Made compliance checklist optional, added 'Skip for now' button. Users can defer to day 7. Resolved in 2.3.1.",
+    "resolved_at": "2025-01-24T09:15:00Z",
+    "resolution_time_hours": 96
+  },
+  {
+    "ticket_id": "t002",
+    "account_id": "a002",
+    "created_at": "2025-01-21T09:48:00Z",
+    "priority": "critical",
+    "subject": "Data warehouse integration fails 90% of the time",
+    "body": "Upgraded to Release 2.3 yesterday. Data warehouse connector is failing for almost all our users. They try to connect, get timeout error after 30 seconds. This is blocking critical onboarding flow for 47 customers. We're getting escalation threats.",
+    "resolved": true,
+    "resolution": "Connector timeout was set to 30s, too aggressive for slow networks. Increased to 120s. Also fixed async connection pooling bug. Data warehouse success rate now 78%. Deployed 2025-01-23.",
+    "resolved_at": "2025-01-23T16:22:00Z",
+    "resolution_time_hours": 30
+  },
+  {
+    "ticket_id": "t003",
+    "account_id": "a003",
+    "created_at": "2025-01-22T11:16:00Z",
+    "priority": "medium",
+    "subject": "Dashboard loading slowly, 5-10 sec latency",
+    "body": "Since last Friday, dashboard is sluggish. Used to load in 1-2s, now taking 5-10s. We have 1.2M events in our account. Analytics queries are timing out sometimes. This is impacting our daily standup.",
+    "resolved": true,
+    "resolution": "Root cause: Redis eviction policy (LRU) was thrashing during cache churn. Switched to LFU (least frequently used) on Feb 5. Latency improved from 8s to 1.5s. Also optimized D3 visualization rendering.",
+    "resolved_at": "2025-02-05T14:33:00Z",
+    "resolution_time_hours": 312
+  },
+  {
+    "ticket_id": "t004",
+    "account_id": "a004",
+    "created_at": "2025-01-30T15:44:00Z",
+    "priority": "medium",
+    "subject": "API migration: v1 to v2 response format unclear",
+    "body": "We're planning to migrate from API v1 to v2, but the response format changes are confusing. The docs show examples but we need clarity on pagination field names and error format differences. Our team needs 2-3 weeks to refactor.",
+    "resolved": true,
+    "resolution": "Provided detailed migration guide with code examples. Created 1:1 working session with their engineering team. They migrated successfully, went live on Feb 8. v1 endpoints still work (deprecated as of Feb 1).",
+    "resolved_at": "2025-02-08T17:00:00Z",
+    "resolution_time_hours": 409
+  },
+  {
+    "ticket_id": "t005",
+    "account_id": "a005",
+    "created_at": "2025-02-02T08:22:00Z",
+    "priority": "low",
+    "subject": "Feature request: CSV export not available for large datasets",
+    "body": "When I try to export more than 100K events to CSV, the browser hangs. Looks like the entire dataset is loaded in memory before creating the file. Could you support streaming exports for larger datasets?",
+    "resolved": false,
+    "resolution": null,
+    "resolved_at": null,
+    "resolution_time_hours": null,
+    "notes": "Engineering assessed: Medium complexity, ~40h estimate. Prioritized for Q1 2025. Streaming export would reduce memory footprint significantly."
+  },
+  {
+    "ticket_id": "t006",
+    "account_id": "a001",
+    "created_at": "2025-02-07T12:05:00Z",
+    "priority": "low",
+    "subject": "Dashboard dark mode: button hover states have low contrast",
+    "body": "Enabled dark mode in Release 2.4. The hover state on buttons is hard to see - white text on light gray background. Not accessible for our team members with vision impairment. Could you fix the contrast?",
+    "resolved": false,
+    "resolution": null,
+    "resolved_at": null,
+    "resolution_time_hours": null,
+    "notes": "Acknowledged as valid accessibility issue. Fix included in 2.4.1 (releasing Feb 15). Customer added to beta testers for early access."
+  },
+  {
+    "ticket_id": "t007",
+    "account_id": "a006",
+    "created_at": "2025-02-01T16:30:00Z",
+    "priority": "medium",
+    "subject": "Win-back campaign emails going to spam",
+    "body": "We enabled win-back campaigns (beta). The automated emails are going to spam folders for about 30% of recipients. SPF/DKIM headers look correct. What could be wrong?",
+    "resolved": true,
+    "resolution": "Issue was aggressive content (4 links per email). Reduced to 2 links, added unsubscribe header, improved email copywriting. Spam rate dropped to 3% after changes. Deployed Feb 3.",
+    "resolved_at": "2025-02-03T10:44:00Z",
+    "resolution_time_hours": 42
+  },
+  {
+    "ticket_id": "t008",
+    "account_id": "a007",
+    "created_at": "2025-01-25T13:12:00Z",
+    "priority": "high",
+    "subject": "Bulk API endpoint returns 502 on exactly 1000 requests",
+    "body": "Testing the new bulk API (Release 2.4). Everything works fine with 999 requests or 1001 requests, but exactly 1000 requests always returns 502 Server Error. This is a weird edge case but limits our batch processing.",
+    "resolved": false,
+    "resolution": null,
+    "resolved_at": null,
+    "resolution_time_hours": null,
+    "notes": "Reproduced the issue. Found off-by-one error in batch validation logic (checking >= 1000 instead of > 1000). Fix ready in hotfix branch, releasing 2.4.1 Feb 15. Workaround: Send 999 or 1001 requests."
+  },
+  {
+    "ticket_id": "t009",
+    "account_id": "a008",
+    "created_at": "2025-02-06T09:30:00Z",
+    "priority": "medium",
+    "subject": "SOC 2 audit confirmation needed for enterprise deal",
+    "body": "Our prospect asked for SOC 2 Type II certification. Do we have it? They want to see the report before signing. This is blocking a $500K annual contract.",
+    "resolved": true,
+    "resolution": "Sent SOC 2 Type II report (completed Dec 2024, zero high-severity findings). Sales closed deal same day. Customer go-live Feb 10.",
+    "resolved_at": "2025-02-06T14:15:00Z",
+    "resolution_time_hours": 5
+  },
+  {
+    "ticket_id": "t010",
+    "account_id": "a009",
+    "created_at": "2025-01-18T22:45:00Z",
+    "priority": "critical",
+    "subject": "URGENT: Activation rate dropped 40% overnight after Release 2.3",
+    "body": "Our metrics show activation dropped from 42% to 25% after your Release 2.3 went live. This is a critical business issue. We had a product launch scheduled for this week and now we're at risk of missing targets. What happened? Can you rollback?",
+    "resolved": true,
+    "resolution": "Issue identified: mandatory compliance checklist on day 1 of onboarding was too aggressive. Made optional, moved to day 7. Fixed data warehouse connector timeout. Activation recovered to 39% by Jan 25. Worked with customer to replan launch.",
+    "resolved_at": "2025-01-25T11:00:00Z",
+    "resolution_time_hours": 157
+  }
+]
