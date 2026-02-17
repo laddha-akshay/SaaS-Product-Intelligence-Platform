@@ -88,15 +88,64 @@ saas_product_intelligence_platform/
 ### Local setup
 
 ```bash
-git clone https://github.com/yourname/saas_product_intelligence_platform.git
-cd saas_product_intelligence_platform
+git clone https://github.com/laddha-akshay/SaaS-Product-Intelligence-Platform.git
+cd SaaS-Product-Intelligence-Platform
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Run API:
+---
+
+## Quick Start Demo
+
+See the system in action with just one command:
 
 ```bash
-uvicorn run:app --reload
+python demo.py
+```
+
+This runs 3 sample queries demonstrating:
+
+- Hybrid retrieval (dense semantic + sparse keyword search)
+- Learning-to-Rank model reordering candidates by usefulness
+- Constrained reasoning layer generating evidence-based answers
+- Citations pulled directly from source documents
+- Confidence scores and latency metrics
+
+**Example Output:**
+
+```
+📋 QUERY: Why did activation drop in January?
+
+📊 ANSWER:
+Based on internal documentation: - Activation dropped 18% in first 48h (from 42% to 34%)...
+
+🔗 CITATIONS:
+   [1] - Activation dropped 18% in first 48h (from 42% to 34%)
+   [2] - Mar 1: v1 marked deprecated (still works, warnings in logs)
+
+📈 METRICS:
+   • Confidence: 60.81%
+   • Latency: 1.89ms
+```
+
+---
+
+## Running the API
+
+Start the FastAPI inference service:
+
+```bash
+uvicorn app.api:app --reload --host 127.0.0.1 --port 8000
+```
+
+Make queries via HTTP:
+
+```bash
+curl -X POST http://localhost:8000/query \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Why did activation drop?"}'
 ```
 
 ---
