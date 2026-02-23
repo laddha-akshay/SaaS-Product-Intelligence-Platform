@@ -15,21 +15,10 @@ class RankingOrchestrator:
     def rank_candidates(
         self, query: str, candidates: List[Dict[str, Any]], top_k: int = 5
     ) -> List[Dict[str, Any]]:
-        """
-        Rank candidates by usefulness.
 
-        Args:
-            query: user query
-            candidates: list of {"text": ..., "score": ...} dicts from retrieval
-            top_k: return top k candidates
-
-        Returns:
-            ranked candidates with rank scores
-        """
         if not candidates:
             return []
 
-        # Extract features for each candidate
         docs = [c["text"] for c in candidates]
         dense_scores = [c.get("score", 0.5) for c in candidates]
         sparse_scores = [c.get("score", 0.5) for c in candidates]
@@ -38,10 +27,8 @@ class RankingOrchestrator:
             query, docs, dense_scores, sparse_scores
         )
 
-        # Rank using model
         rank_scores = self.model.rank(features)
 
-        # Attach rank scores and sort
         ranked = []
         for i, cand in enumerate(candidates):
             cand_copy = cand.copy()
